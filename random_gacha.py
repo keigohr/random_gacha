@@ -14,27 +14,23 @@ def scrape_weather():
 
   bsObj = BeautifulSoup(r.content, "html.parser")
 
-  #今日の天気を取得
-  today = bsObj.find(class_="today-weather")
-  weather = today.p.string
+  #10日間天気のまとまり
+  precip=bsObj.find(class_="forecast-point-week")
 
-  #気温情報のまとまり
-  temp=today.div.find(class_="date-value-wrap")
+  #10日間降水確率の取得
+  precip_strip=precip.find_all(class_="precip")
+  precip_array=[]
+  for item in precip_strip:
+    val=int(item.select_one(".precip .unit").previous_sibling)
+    precip_array.append(val)
 
-  #気温の取得
-  temp=temp.find_all("dd")
-  temp_max = int(temp[0].span.string) #最高気温
-  temp_min = int(temp[2].span.string) #最低気温
-
-  return([temp_max, temp_min])
+  return(precip_array)
 
 # click時のイベント
 def btn_click():
   x = random.random()
-  w = scrape_weather()
-  y = w[0]
-  z = w[1]
-  lucky = x * (y + z)
+  y = random.choice(scrape_weather())
+  lucky = x * y
   messagebox.showinfo("今日の乱数",lucky)
 
 # 画面作成
