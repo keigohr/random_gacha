@@ -1,6 +1,17 @@
-﻿import tkinter as tk
+﻿import sys
+import json, config
+from urllib import request
+import tkinter as tk
 from tkinter import messagebox
 import random
+
+from requests_oauthlib import OAuth1Session
+
+CK = config.CONSUMER_KEY
+CS = config.CONSUMER_SECRET
+AT = config.ACCESS_TOKEN
+ATS = config.ACCESS_TOKEN_SECRET
+twitter = OAuth1Session(CK, CS, AT, ATS)
 
 def scrape_weather():
   import requests
@@ -26,12 +37,27 @@ def scrape_weather():
 
   return(precip_array)
 
+def tweet():
+
+       url = "https://api.twitter.com/1.1/statuses/update.json"        
+       params = {"status":"今日の乱数は{}でした！".format(lucky)}
+
+
+       req = twitter.post(url, params = params)
+
+       if req.status_code == 200:
+              print ("OK")
+       else:
+              print ("Error")
+
 # click時のイベント
 def btn_click():
   x = random.random()
   y = random.choice(scrape_weather())
   lucky = x * y
-  messagebox.showinfo("今日の乱数",lucky)
+  ret = messagebox.showinfo("今日の乱数","今日の乱数は{}です。Twitterで共有しますか？".format(lucky))
+  if ret == True:
+    tweet()
 
 # 画面作成
 tki = tk.Tk()
@@ -39,8 +65,8 @@ tki.geometry('300x200') # 画面サイズの設定
 tki.title('ボタンのサンプル') # 画面タイトルの設定
 
 # ボタンの作成
-btn = tk.Button(tki, text='ボタン', command = btn_click)
-btn.place(x=130, y=80) #ボタンを配置する位置の設定
+btn1 = tk.Button(tki, text='ボタン', command = btn_click)
+btn1.place(x=130, y=80) #ボタンを配置する位置の設定
 
 # 画面をそのまま表示
 tki.mainloop()
