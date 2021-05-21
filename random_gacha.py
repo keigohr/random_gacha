@@ -13,6 +13,8 @@ AT = config.ACCESS_TOKEN
 ATS = config.ACCESS_TOKEN_SECRET
 twitter = OAuth1Session(CK, CS, AT, ATS)
 
+###これはテストです。
+
 def scrape_weather():
   import requests
   from bs4 import BeautifulSoup
