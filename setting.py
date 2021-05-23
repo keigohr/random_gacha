@@ -30,4 +30,12 @@ def open_setting():
             break
     window.close()
 
+def get_show_list():
+    ini = configparser.ConfigParser()
+    ini.read('.\setting.ini','UTF-8')
+    hukou_setting: bool = is_true(ini.get('setting','hukou'))
+    weather_setting: bool = is_true(ini.get('setting','weather'))
+    region_setting: int = ini.get('setting','region')
+    return [hukou_setting,region_setting,weather_setting]
+  
 #open_setting()
