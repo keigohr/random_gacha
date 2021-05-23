@@ -8,8 +8,8 @@ import setting
 #  設定画面　実際には別のファイルに書いた関数を使う
 
 
-def get_show_list():
-    return [True, False]
+#def get_show_list():
+#    return [True, False]
 
 def get_weather_list():
     return [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png']
@@ -23,7 +23,7 @@ weather_list = get_weather_list()
 fukou_list = get_fukou_list()
 
 #  どのガチャを表示されるか
-show_list = get_show_list()
+show_list = setting.get_show_list()
 Y_weather: bool = show_list[0]
 Y_Fukou: bool = show_list[1]
 
