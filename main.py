@@ -15,19 +15,36 @@ def open_setting():
             break
     window.close()
 
+def get_show_list():
+    return [True, False]
+
+def get_weather_list():
+    return [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png']
+
+def get_fukou_list():
+    return [r'img\rain.png', r'img\rain.png', r'img\rain.png', r'img\cloudy.png']
+
 menu_def = [['設定', ['設定']]]
 #  どういう形式でガチャ結果を渡すかは未定　画像の配置はどっちでやる？
-weather_list = [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png']
-fukou_list = [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png']
+weather_list = get_weather_list()
+fukou_list = get_fukou_list()
+
+#  どのガチャを表示されるか
+show_list = get_show_list()
+Y_weather: bool = show_list[0]
+Y_Fukou: bool = show_list[1]
 
 #  ここからレイアウトの設定　PySimpleGUIは基本的にリストのリストでレイアウトを定める
 layout = [
     #  メニューバーの設定
     [sg.Menu(menu_def, tearoff=False)],
-    #  map関数を使って、上で定義したパスのlistをまとめて画像のリストに変換している
-    map(sg.Image, weather_list),
-    map(sg.Image, fukou_list),
 ]
+#  show_listの対応する成分がTrueなら、レイアウトに加える（Falseの場合も全体のレイアウトを保つ方法はまだわかってない
+if(Y_weather):
+    #  map関数を使って、上で定義したパスのlistをまとめて画像のリストに変換している
+    layout.append(map(sg.Image, weather_list))
+if(Y_Fukou):
+    layout.append(map(sg.Image, fukou_list))
 #  ここまで
 
 #  ウィンドウのタイトル
