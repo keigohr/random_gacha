@@ -25,7 +25,7 @@ fukou_list = get_fukou_list()
 #  どのガチャを表示されるか
 show_list = setting.get_show_list()
 Y_weather: bool = show_list[0]
-Y_Fukou: bool = show_list[1]
+Y_Fukou: bool = show_list[2]
 
 #  ここからレイアウトの設定　PySimpleGUIは基本的にリストのリストでレイアウトを定める
 layout = [
