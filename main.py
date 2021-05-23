@@ -3,17 +3,10 @@ import PySimpleGUI as sg
 import os.path
 import PIL.Image
 import io
+import setting
 
 #  設定画面　実際には別のファイルに書いた関数を使う
-def open_setting():
-    layout = [[sg.Text("New Window", key="new")], [sg.Button("Exit")]]
-    window = sg.Window("Settings", layout, modal=True)
-    choice = None
-    while True:
-        event, values = window.read()
-        if event == "Exit" or event == sg.WINDOW_CLOSED:
-            break
-    window.close()
+
 
 def get_show_list():
     return [True, False]
@@ -57,6 +50,6 @@ while True:
         break
     #  メニューバーの「設定」が押されたら設定画面を開く
     if event == '設定':
-        open_setting()
+        setting.open_setting()
 
 window.close()
