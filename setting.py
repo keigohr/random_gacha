@@ -31,11 +31,12 @@ def open_setting():
     window.close()
 
 def get_show_list():
+    values_region = ['北海道','東北','関東','中部','近畿','中国','四国','九州']
     ini = configparser.ConfigParser()
     ini.read('.\setting.ini','UTF-8')
     hukou_setting: bool = is_true(ini.get('setting','hukou'))
     weather_setting: bool = is_true(ini.get('setting','weather'))
-    region_setting: int = ini.get('setting','region')
+    region_setting: str = values_region[int(ini.get('setting','region'))]
     return [hukou_setting,region_setting,weather_setting]
   
 #open_setting()
