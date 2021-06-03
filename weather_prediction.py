@@ -1,10 +1,10 @@
 ﻿#明日の予想天気、最高気温、最低気温、降水確率をリストで出力する関数
 
+#ライブラリのインポート
+import requests
+from bs4 import BeautifulSoup
+  
 def return_weather():
-
-  #ライブラリのインポート
-  import requests
-  from bs4 import BeautifulSoup
 
   #tenki.jpの目的の地域のページのURL（暫定で東京都文京区)
   url='https://tenki.jp/forecast/3/16/4410/13105/'
@@ -35,7 +35,17 @@ def return_weather():
   for item in precip_strip:
     val=int(item.select_one(".unit").previous_sibling)
     precip_array.append(val)
+    
+  #天気予報に画像を対応させる
+  weather_image=None
+  weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png']
+  if '晴' in weather:
+    weather_image=weather_image_list[0]
+  elif '曇' in wetather:
+    weather_image=weather_image_list[1]
+  elif '雨' in weather:
+    weather_image=weather_image_list[2]
 
   #結果の出力
   weather_prediction=[weather, temp_max, temp_min, precip_array]
-  return map(sg.Text, weather_prediction)
+  return [map(sg.Image, weather_image),map(sg.Text, weather_prediction)]
