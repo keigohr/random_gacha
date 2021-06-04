@@ -3,6 +3,7 @@
 #ライブラリのインポート
 import requests
 from bs4 import BeautifulSoup
+import PySimpleGUI as sg
   
 def return_weather():
 
@@ -43,9 +44,11 @@ def return_weather():
     weather_image=weather_image_list[0]
   elif '雨' in weather:
     weather_image=weather_image_list[2]
-  elif '曇' in wetather:
+  elif '曇' in weather:
     weather_image=weather_image_list[1]
 
   #結果の出力
   weather_prediction=[weather, temp_max, temp_min, precip_array]
-  return [map(sg.Image, weather_image),map(sg.Text, weather_prediction)]
+  test = [sg.Image(weather_image)]
+  test.append([sg.Text(a) for a in weather_prediction])
+  return test
