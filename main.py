@@ -7,23 +7,9 @@ import setting
 import weather_prediction
 import mamechishiki
 import webbrowser
-
-#  設定画面　実際には別のファイルに書いた関数を使う
-
-
-#def get_show_list():
-#    return [True, False]
-
-def get_weather_list():
-    return map(sg.Image, [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png'])
-
-def get_fukou_list():
-    return [r'img\rain.png', r'img\rain.png', r'img\rain.png', r'img\cloudy.png']
+import fukou_gacha
 
 menu_def = [['設定', ['設定','追加']]]
-#  どういう形式でガチャ結果を渡すかは未定　画像の配置はどっちでやる？
-weather_list = weather_prediction.return_weather()
-fukou_list = get_fukou_list()
 
 #  どのガチャを表示されるか
 show_list = setting.get_show_list()
@@ -31,21 +17,31 @@ Y_weather: bool = show_list[0]
 Y_Fukou: bool = show_list[2]
 
 #  ここからレイアウトの設定　PySimpleGUIは基本的にリストのリストでレイアウトを定める
+#  各ボタンを押したときに実行される関数
+#  引数に、各々が実装してくれた関数と、そのガチャのウィンドウのタイトルを渡す
+#  関数の返り値は、各ウィンドウのレイアウトを定めるリストのリスト
+#  背景画像についてはまだ実装していない
+def open_window(Func, title):
+    _layout = Func()
+    _window = sg.Window(title, _layout, modal=True)
+    choice = None
+    while True:
+        _event, _values = _window.read()
+        if _event == "Exit" or _event == sg.WIN_CLOSED:
+            break
+
+    _window.close()
+
 layout = [
     #  メニューバーの設定
     [sg.Menu(menu_def, tearoff=False)],
+    [sg.Button("天気予報を見る", key="weather", size=(50,5))],
+    [sg.Button("不幸ガチャ", key="fukou", size=(50,5))],
+    mamechishiki.get_mamechishiki_list()
 ]
-#  show_listの対応する成分がTrueなら、レイアウトに加える（Falseの場合も全体のレイアウトを保つ方法はまだわかってない
-if(Y_weather):
-    #  map関数を使って、上で定義したパスのlistをまとめて画像のリストに変換している
-    layout.append(weather_list)
-if(Y_Fukou):
-    layout.append(map(sg.Image, fukou_list))
-#  ここまで
-layout.append(mamechishiki.get_mamechishiki_list())
 
 #  ウィンドウのタイトル
-window = sg.Window('Random Gacha', layout, size=(1000, 500))
+window = sg.Window('Random Gacha', layout, size=(750, 500))
 
 while True:
     event, values = window.read()
@@ -60,5 +56,9 @@ while True:
         setting.open_setting()
     if event == '追加':
         setting.open_addition()
+    if event == 'weather':
+        open_window(weather_prediction.return_weather, "天気ガチャ")
+    if event == 'fukou':
+        open_window(fukou_gacha.fukou_gacha, "不幸ガチャ")
 
 window.close()

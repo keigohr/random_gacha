@@ -51,4 +51,4 @@ def return_weather():
   weather_prediction=[weather, temp_max, temp_min, precip_array]
   test = [sg.Image(weather_image)]
   test.append([sg.Text(a) for a in weather_prediction])
-  return test
+  return [test]
