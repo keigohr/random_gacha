@@ -4,6 +4,9 @@ import os.path
 import PIL.Image
 import io
 import setting
+import weather_prediction
+import mamechishiki
+import webbrowser
 
 #  設定画面　実際には別のファイルに書いた関数を使う
 
@@ -12,14 +15,14 @@ import setting
 #    return [True, False]
 
 def get_weather_list():
-    return [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png']
+    return map(sg.Image, [r'img\rain.png', r'img\cloudy.png', r'img\cloudy.png', r'img\cloudy.png'])
 
 def get_fukou_list():
     return [r'img\rain.png', r'img\rain.png', r'img\rain.png', r'img\cloudy.png']
 
 menu_def = [['設定', ['設定','追加']]]
 #  どういう形式でガチャ結果を渡すかは未定　画像の配置はどっちでやる？
-weather_list = get_weather_list()
+weather_list = weather_prediction.return_weather()
 fukou_list = get_fukou_list()
 
 #  どのガチャを表示されるか
@@ -35,16 +38,20 @@ layout = [
 #  show_listの対応する成分がTrueなら、レイアウトに加える（Falseの場合も全体のレイアウトを保つ方法はまだわかってない
 if(Y_weather):
     #  map関数を使って、上で定義したパスのlistをまとめて画像のリストに変換している
-    layout.append(map(sg.Image, weather_list))
+    layout.append(weather_list)
 if(Y_Fukou):
     layout.append(map(sg.Image, fukou_list))
 #  ここまで
+layout.append(mamechishiki.get_mamechishiki_list())
 
 #  ウィンドウのタイトル
-window = sg.Window('Random Gacha', layout)
+window = sg.Window('Random Gacha', layout, size=(1000, 500))
 
 while True:
     event, values = window.read()
+    if event.startswith("URL "):
+        url = event.split(' ')[1]
+        webbrowser.open(url)
     #  xボタンが押されたら閉じる
     if event == sg.WINDOW_CLOSED:
         break
