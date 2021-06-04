@@ -51,8 +51,19 @@ def get_show_list():
     return [fukou_setting,region_setting,weather_setting,trivia_setting,addition1_setting,addition2_setting,addition3_setting]
 
 def get_show_list_addition1():
-    json_open = open("./data.json","r",encoding="utf-8")
+    json_open = open("./addition1.json","r",encoding="utf-8")
     data = json.load(json_open)
+    return data
+
+def get_show_list_addition2():
+    json_open = open("./addition2.json","r",encoding="utf-8")
+    data = json.load(json_open)
+    return data
+
+def get_show_list_addition3():
+    json_open = open("./addition3.json","r",encoding="utf-8")
+    data = json.load(json_open)
+    return data
     
 
 def open_addition():
