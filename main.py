@@ -21,22 +21,28 @@ Y_Fukou: bool = show_list[2]
 #  引数に、各々が実装してくれた関数と、そのガチャのウィンドウのタイトルを渡す
 #  関数の返り値は、各ウィンドウのレイアウトを定めるリストのリスト
 #  背景画像についてはまだ実装していない
-def open_window(Func, title):
+#  3番目の返り値でツイートする文字列を返す
+def open_window(Func, title, tweet = 'test'):
     _layout = Func()
+    _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
+    url = 'https://twitter.com/intent/tweet?text='
+    url += tweet
     _window = sg.Window(title, _layout, modal=True)
     choice = None
     while True:
         _event, _values = _window.read()
         if _event == "Exit" or _event == sg.WIN_CLOSED:
             break
+        if _event == "tweet":
+            webbrowser.open(url)
 
     _window.close()
 
 layout = [
     #  メニューバーの設定
     [sg.Menu(menu_def, tearoff=False)],
-    [sg.Button("天気予報を見る", key="weather", size=(50,5))],
-    [sg.Button("不幸ガチャ", key="fukou", size=(50,5))],
+    [sg.Button("天気予報を見る", key="weather", size=(50, 5))],
+    [sg.Button("不幸ガチャ", key="fukou", size=(50, 5))],
     mamechishiki.get_mamechishiki_list()
 ]
 
@@ -60,5 +66,8 @@ while True:
         open_window(weather_prediction.return_weather, "天気ガチャ")
     if event == 'fukou':
         open_window(fukou_gacha.fukou_gacha, "不幸ガチャ")
+    if event == 'tweet':
+        url = 'https://twitter.com/intent/tweet?text=Insert Text Here'
+        webbrowser.open(url)
 
 window.close()
