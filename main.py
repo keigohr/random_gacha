@@ -17,7 +17,7 @@ def get_weather_list():
 def get_fukou_list():
     return [r'img\rain.png', r'img\rain.png', r'img\rain.png', r'img\cloudy.png']
 
-menu_def = [['設定', ['設定']]]
+menu_def = [['設定', ['設定','追加']]]
 #  どういう形式でガチャ結果を渡すかは未定　画像の配置はどっちでやる？
 weather_list = get_weather_list()
 fukou_list = get_fukou_list()
@@ -51,5 +51,7 @@ while True:
     #  メニューバーの「設定」が押されたら設定画面を開く
     if event == '設定':
         setting.open_setting()
+    if event == '追加':
+        setting.open_addition()
 
 window.close()
