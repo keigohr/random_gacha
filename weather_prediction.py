@@ -41,10 +41,10 @@ def return_weather():
   weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png']
   if '晴' in weather:
     weather_image=weather_image_list[0]
-  elif '曇' in wetather:
-    weather_image=weather_image_list[1]
   elif '雨' in weather:
     weather_image=weather_image_list[2]
+  elif '曇' in wetather:
+    weather_image=weather_image_list[1]
 
   #結果の出力
   weather_prediction=[weather, temp_max, temp_min, precip_array]
