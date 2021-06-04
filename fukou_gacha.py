@@ -10,7 +10,7 @@ fukou_gacha.fukou_gacha()
 
 import numpy as np
 import os
-import PySimpleGUIWx as sg
+import PySimpleGUI as sg
 
 fig_dic={}
 fig_dic[1]=r"img/kaminarisama.png"
