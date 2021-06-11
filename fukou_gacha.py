@@ -108,12 +108,12 @@ def fukou_gacha():
     color=""#文字の色
     if rare==1:
         tweet+="不幸:"+"「"+result_sentence+"」"+"を引きました"
-        color="ffffff"
+        color="#ffffff"
     elif rare==2:
         tweet+="大不幸:"+"「"+result_sentence+"」"+"を引いてしまいました．．．"
-        color="ff0000"
+        color="#ff0000"
     else:
         tweet+="あらゆる不幸を乗り越えて幸運:"+"「"+result_sentence+"」"+"を引きました!!!!"
-        color="000000"
+        color="#000000"
     
     return tweet,background,[[sg.Image(result_img)],[sg.Text("ガチャ結果:"+result_sentence,text_color=color)]]
