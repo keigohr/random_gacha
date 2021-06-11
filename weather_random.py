@@ -38,11 +38,14 @@ def return_weather():
   #天気予報をランダムに生成する、天気予報に画像を対応させる
   weather=None
   weather_image=None
+  background_color=None
   weather_list=['晴れ', '曇り', '雨', '暴風雨', '雷雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png', r'img\tenki_boufuu.png', r'img\thunder_girl.png']
+  background_color_list=['#87ceeb', '#c0c0c0', '#f5f5f5', '#000000', '#fffacd'] #skyblue, silver, whitesmoke, black, lemonchiffon
   index=generate_random() % 5
   weather=weather_list[index]
   weather_image=weather_image_list[index]
+  background_color=background_color_list[index]
     
   #ツイートする文面を生成
   tweet="今日の天気は{0}です。".format(weather)
@@ -53,4 +56,4 @@ def return_weather():
   #結果の出力
   test = [sg.Image(weather_image)]
   test.append([sg.Text(tweet)])
-  return tweet, background_image, [test]
+  return tweet, background_image, background_color, [test]
