@@ -44,7 +44,7 @@ gacha_list=[
     ["AtCoderのレートが下がります",r"fukou_img/atcoder.png",1],
     ["AtCoderの色が落ちます",r"fukou_img/atcoder.png",1],
     ["AtCoderのレートが上がります",r"fukou_img/atcoder.png",0],
-    ["Twitterで炎上します",r"fukou_internet_enjou_sns_woman.png",1],
+    ["Twitterで炎上します",r"fukou_img/internet_enjou_sns_woman.png",1],
     #講義関連
     ["演習の発表で炎上します",r"fukou_img/siroto.png",1],
     ["ジョルダン標準形を求めようとして計算ミスをします",r"fukou_img/school_test_enpitsu.png",1],
