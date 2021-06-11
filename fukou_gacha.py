@@ -116,4 +116,4 @@ def fukou_gacha():
         tweet+="あらゆる不幸を乗り越えて幸運:"+"「"+result_sentence+"」"+"を引きました!!!!"
         color="000000"
     
-    return tweet,background,color,[[sg.Image(result_img)],[sg.Text("ガチャ結果:"+result_sentence)]]
+    return tweet,background,[[sg.Image(result_img)],[sg.Text("ガチャ結果:"+result_sentence,text_color=color)]]
