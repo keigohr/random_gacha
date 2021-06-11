@@ -86,5 +86,6 @@ def get_mamechishiki_list():
             [sg.Text("詳しくは→ ", font = ('Yu Gothic', 11)),
              sg.Text(source[0], tooltip = source[1], enable_events = True, font = ('Yu Gothic', 11, "underline"), text_color = "#0000ff", key = f'URL {source[1]}')]
     ]
-    return tweet, img_path, my_list
+    # return tweet, img_path, my_list
+    return my_list
 
