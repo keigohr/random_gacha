@@ -183,7 +183,7 @@ def get_addition_result(num):
     while p < ran:
         i = i + 1
         p = p + probability_setting[i]
-        print(p)
+        #print(p)
         if i == len_event - 1:
             break
 
