@@ -51,10 +51,10 @@ def return_weather():
   tweet="今日の天気は{0}です。".format(weather)
 
   #背景画像の指定
-  background_image=r'background_img\weather.jpg'
+  #background_image=r'background_img\weather.jpg'
   
   #結果の出力
   test = [sg.Image(weather_image)]
   test.append([sg.Text(tweet)])
   #return tweet, background_image, background_color, [test]
-  return tweet, background_image, [test]
+  return tweet, background_color, [test]
