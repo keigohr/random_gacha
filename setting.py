@@ -1,5 +1,7 @@
 import PySimpleGUI as sg
 import json
+import numpy as np
+import random
 
 def is_true(value):
     return False if value == 'False' else bool(value)
@@ -50,21 +52,29 @@ def get_show_list():
     addition3_setting:bool = is_true(data["addition3"])
     return [fukou_setting,region_setting,weather_setting,trivia_setting,addition1_setting,addition2_setting,addition3_setting]
 
-def get_show_list_addition1():
-    json_open = open("./addition1.json","r",encoding="utf-8")
+def get_show_list_addition(num):
+    if num == 1:
+        json_open = open("./addition1.json","r",encoding="utf-8")
+    elif num == 2:
+        json_open = open("./addition2.json","r",encoding="utf-8")
+    elif num == 3:
+        json_open = open("./addition3.json","r",encoding="utf-8")
+    
     data = json.load(json_open)
-    return data
-
-def get_show_list_addition2():
-    json_open = open("./addition2.json","r",encoding="utf-8")
-    data = json.load(json_open)
-    return data
-
-def get_show_list_addition3():
-    json_open = open("./addition3.json","r",encoding="utf-8")
-    data = json.load(json_open)
+    data["event"] = data["event"].split()
+    data["probability"] = data["probability"].split()
     return data
     
+def open_warning():
+    layout = [[sg.Text("事象と確率の個数が合っていません！！")]]
+    window = sg.Window("Warning", layout, modal=True)
+    choice = None
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
+            break
+    window.close()
+
 
 def open_addition():
     json_open = open("./addition1.json","r",encoding="utf-8")
@@ -120,17 +130,86 @@ def open_addition1(num):
 
         if event == "Apply":
             new_data = {"name":str(values[0]),"event":str(values[1]),"probability":str(values[2]),"uniform":str(values[3])}
-            if num == 1:
+            if (len(new_data["event"].split()) != len(new_data["probability"].split())) and new_data["uniform"] != "True":
+                open_warning()
+            elif num == 1:
                 with open("./addition1.json","w",encoding = 'utf-8') as f:
                     json.dump(new_data,f,indent=4)
+                break
             elif num == 2:
                 with open("./addition2.json","w",encoding = 'utf-8') as f:
                     json.dump(new_data,f,indent=4)
+                break
             elif num == 3:
                 with open("./addition3.json","w",encoding = 'utf-8') as f:
                     json.dump(new_data,f,indent=4)
-            break
+                break
         elif event == sg.WINDOW_CLOSED: 
             break
 
     window.close()
+
+def get_addition_result(num):
+    if num == 1:
+        json_open = open("./addition1.json","r",encoding="utf-8")
+        data = json.load(json_open)
+    elif num == 2:
+        json_open = open("./addition2.json","r",encoding="utf-8")
+        data = json.load(json_open)
+    elif num == 3:
+        json_open = open("./addition3.json","r",encoding="utf-8")
+        data = json.load(json_open)
+
+    name_setting: str = data["name"]
+    event_setting: str = data["event"].split()
+    probability_setting: float = data["probability"].split()
+    uniform_setting: bool = is_true(data["uniform"])
+
+    len_event = len(event_setting)
+    sum = 0.0
+    
+    if uniform_setting == 1:
+        probability_setting = [p/float(len_event) for p in np.ones(len_event)]
+    else:
+        for i in range(len_event):
+            probability_setting[i] = float(probability_setting[i])
+            sum = sum + probability_setting[i]
+        probability_setting = [p/sum for p in probability_setting]
+    #print(probability_setting)
+    p = 0.0
+    i = -1
+    ran = random.random()
+    #print(ran)
+    while p < ran:
+        i = i + 1
+        p = p + probability_setting[i]
+        print(p)
+        if i == len_event - 1:
+            break
+
+    #print(event_setting[i])
+    
+    
+
+    return [name_setting+"の結果は"+probability_setting[i]+"でした",[
+    [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
+    [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))],
+    [sg.Button("Close")]
+    ]]
+
+
+def show_test():
+    layout = get_addition_result(1)
+    window = sg.Window("Addition", layout, modal=True)
+    choice = None
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
+            break
+        if event == "Close":
+            break
+    window.close()
+
+
+#get_addition_result(1)
+#show_test()
