@@ -191,15 +191,15 @@ def get_addition_result(num):
     
     
 
-    return [name_setting+"の結果は"+probability_setting[i]+"でした",[
+    return name_setting+"の結果は"+event_setting[i]+"でした","path",[
     [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
     [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))],
     [sg.Button("Close")]
-    ]]
+    ]
 
 
 def show_test():
-    layout = get_addition_result(1)
+    tweet,path,layout = get_addition_result(2)
     window = sg.Window("Addition", layout, modal=True)
     choice = None
     while True:
