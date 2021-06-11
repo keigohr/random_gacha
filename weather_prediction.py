@@ -4,6 +4,7 @@
 import requests
 from bs4 import BeautifulSoup
 import PySimpleGUI as sg
+import weather_random
   
 def return_weather():
 
@@ -63,4 +64,4 @@ def return_weather():
   test = [sg.Image(weather_image)]
   test.append([sg.Text(content)])
   #return tweet, background_image, background_color, [test]
-  return tweet, background_color, [test]
+  return tweet, background_color, [test], weather_random()
