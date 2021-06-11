@@ -64,4 +64,4 @@ def return_weather():
   test = [sg.Image(weather_image)]
   test.append([sg.Text(content)])
   #return tweet, background_image, background_color, [test]
-  return tweet, background_color, [test], weather_random()
+  return tweet, background_color, [test], weather_random.return_weather()
