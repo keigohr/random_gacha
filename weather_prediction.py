@@ -54,7 +54,6 @@ def return_weather():
   background_image=r'background_img\weather.jpg'
   
   #結果の出力
-  weather_prediction=[weather, temp_max, temp_min, precip_array]
   test = [sg.Image(weather_image)]
   test.append([sg.Text(tweet)])
   return tweet, background_image, [test]
