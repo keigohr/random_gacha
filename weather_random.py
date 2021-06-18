@@ -54,7 +54,7 @@ def return_weather():
   background_color=None
   weather_list=['晴れ', '雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\rain_man.png']
-  background_color_list=['LightGreen4', 'Reddit'] 
+  #background_color_list=['LightGreen4', 'Reddit'] 
 
   rain_number=0
   
@@ -72,7 +72,7 @@ def return_weather():
     test2.append(sg.Image(weather_image))
     rain_number+=index
 
-  background_color=background_color_list[index]
+  background_color='LightGreen4'
     
   #ツイートする文面を生成
   #tweet="降水確率:{0}%25%0A天気:{1}".format(value, weather)
@@ -89,4 +89,4 @@ def return_weather():
   
   myfont = 'UD デジタル 教科書体 NP-B'
   test=[[sg.Text(content0, font = (myfont, 20))], [sg.Text(content1, font = (myfont, 20))], test1, test2, [sg.Text(content2, font = (myfont, 20))]]
-  return tweet, background_color, [test]
+  return content2, background_color, [test]
