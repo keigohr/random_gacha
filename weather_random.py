@@ -70,6 +70,8 @@ def return_weather():
   
   #結果の出力
   test = [sg.Image(weather_image)]
-  test.append([sg.Text(content)])
+  
+  myfont = '游ゴシック'
+  test.append([sg.Text(content, font = (myfont, 20))])
   #return tweet, background_image, background_color, [test]
   return tweet, background_color, [test]
