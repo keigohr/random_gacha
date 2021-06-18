@@ -89,7 +89,7 @@ while True:
         open_window(sosuu_gacha.sosuu_gacha, "Prime Gacha")
     if event == 'custom1':
         add = str(setting.get_show_list()[4])
-        name1,name2,name3 = setting.addtion_name()
+        name1,name2,name3 = setting.addition_name()
         
         if add == name1:
             open_window(setting.get_addition_result(1),name1)
