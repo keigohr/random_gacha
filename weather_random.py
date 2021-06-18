@@ -62,8 +62,8 @@ def return_weather():
   background_color=background_color_list[index]
     
   #ツイートする文面を生成
-  tweet="降水確率：{0}%25 %0A 天気: {1}".format(value, weather)
-  content="降水確率：{0}% \n 天気: {1}".format(value, weather)
+  tweet="降水確率:{0}%25%0A天気:{1}".format(value, weather)
+  content="降水確率:{0}%\n天気:{1}".format(value, weather)
 
   #背景画像の指定
   #background_image=r'background_img\weather.jpg'
