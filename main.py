@@ -50,8 +50,9 @@ window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_jus
 
 
 def open_window(func, title):
-    tweet, background_theme, _layout = func()
+    tweet, theme, _layout = func()
     _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
+    sg.theme(theme)
     _url = 'https://twitter.com/intent/tweet?text='
     _url += tweet
     _window = sg.Window(title, _layout, modal=True)
@@ -76,6 +77,7 @@ while True:
         break
     #  メニューバーの「設定」が押されたら設定画面を開く
     if event == 'setting':
+        sg.theme('Black')
         setting.open_setting()
     if event == 'add':
         setting.open_addition()
