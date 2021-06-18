@@ -88,7 +88,7 @@ while True:
     if event == 'prime':
         open_window(sosuu_gacha.sosuu_gacha, "Prime Gacha")
     if event == 'custom1':
-        add = str(setting.get_show_list()[5])
+        add = str(setting.get_show_list()[4])
         json_open = open("./addition1.json","r",encoding="utf-8")
         data1 = json.load(json_open)
         name1_setting:str = "1:"+str(data1["name"])
