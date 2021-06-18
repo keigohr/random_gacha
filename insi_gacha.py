@@ -18,7 +18,7 @@ gacha_list=[
         ["テスト本番で受験票を忘れます",r"insi_img/illustrain02-juken09.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E3%83%86%E3%82%B9%E3%83%88%E6%9C%AC%E7%95%AA%E3%81%A7%E5%8F%97%E9%A8%93%E7%A5%A8%E3%82%92%E5%BF%98%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
         ["テスト本番で消しゴムを忘れます",r"insi_img/bunbougu_keshigomu.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E3%83%86%E3%82%B9%E3%83%88%E6%9C%AC%E7%95%AA%E3%81%A7%E6%B6%88%E3%81%97%E3%82%B4%E3%83%A0%E3%82%92%E5%BF%98%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
         ["テスト本番で筆記用具が故障します",r"insi_img/seizu_pen.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E3%83%86%E3%82%B9%E3%83%88%E6%9C%AC%E7%95%AA%E3%81%A7%E7%AD%86%E8%A8%98%E7%94%A8%E5%85%B7%E3%81%8C%E6%95%85%E9%9A%9C%E3%81%97%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
-        ["志望の低い研究室に配属されます",r"insi_img_456.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E7%AC%AC%E5%9B%9B%E5%BF%97%E6%9C%9B%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AB%E9%85%8D%E5%B1%9E%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
+        ["志望の低い研究室に配属されます",r"insi_img/456.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E7%AC%AC%E5%9B%9B%E5%BF%97%E6%9C%9B%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AB%E9%85%8D%E5%B1%9E%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
         #"""["第五志望の研究室に配属されます","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E7%AC%AC%E4%BA%94%E5%BF%97%E6%9C%9B%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AB%E9%85%8D%E5%B1%9E%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
         #["第六志望の研究室に配属されます","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E7%AC%AC%E5%85%AD%E5%BF%97%E6%9C%9B%E3%81%AE%E7%A0%94%E7%A9%B6%E5%AE%A4%E3%81%AB%E9%85%8D%E5%B1%9E%E3%81%95%E3%82%8C%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],"""
         ["試験当日に電車が遅延します",r"insi_img/train_chien_man.png","%E9%99%A2%E8%A9%A6%E3%82%AC%E3%83%81%E3%83%A3%E3%81%A7%E3%83%8F%E3%82%BA%E3%83%AC%3A%E3%80%8C%E8%A9%A6%E9%A8%93%E5%BD%93%E6%97%A5%E3%81%AB%E9%9B%BB%E8%BB%8A%E3%81%8C%E9%81%85%E5%BB%B6%E3%81%97%E3%81%BE%E3%81%99%E3%80%8D%E3%82%92%E5%BC%95%E3%81%8D%E3%81%BE%E3%81%97%E3%81%9F"],
@@ -89,7 +89,7 @@ def insi_gacha():
     background_color=""
     sentence_color=""
 
-    if rarity_index==0:
+    """if rarity_index==0:
         rarity="ハズレ"
         background_color="#a9a9a9"
         sentence_color="#000000"
@@ -100,6 +100,20 @@ def insi_gacha():
     else:
         rarity="あたり"
         background_color="ffd700"
+        sentence_color="#000000""""
+    
+    if rarity_index==0:
+        rarity="ハズレ"
+        background_color="DarkGrey"
         sentence_color="#000000"
+    elif rarity_index==1:
+        rarity="大ハズレ"
+        background_color="Black"
+        sentence_color="#ff0000"
+    else:
+        rarity="あたり"
+        background_color="LightYellow"
+        sentence_color="#000000"
+       
     return result_tweet,background_color,[[sg.Image(result_image)],[sg.Text(rarity+result_sentence,text_color=sentence_color)]]
 #print(insi_gacha())
