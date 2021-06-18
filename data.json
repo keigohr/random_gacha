@@ -1,9 +1,7 @@
 {
     "weather": "True",
-    "region": "\u95a2\u6771",
+    "region": "\u5317\u6d77\u9053",
     "fukou": "True",
     "trivia": "True",
-    "addition1": "False",
-    "addition2": "False",
-    "addition3": "True"
+    "addition": "1:てすと"
 }
