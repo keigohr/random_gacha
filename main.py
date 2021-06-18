@@ -1,32 +1,59 @@
-# -*- coding: utf-8 -*-
 import PySimpleGUI as sg
-import os.path
-import PIL.Image
-import io
+import base64
 import setting
 import weather_prediction
 import mamechishiki
 import webbrowser
+import insi_gacha
+import sosuu_gacha
 import fukou_gacha
 
-menu_def = [['設定', ['設定','追加']]]
 
-#  どのガチャを表示されるか
-show_list = setting.get_show_list()
-Y_weather: bool = show_list[0]
-Y_Fukou: bool = show_list[2]
+def image_file_to_base64(file_path):
+    with open(file_path, "rb") as image_file:
+        data = base64.b64encode(image_file.read())
 
-#  ここからレイアウトの設定　PySimpleGUIは基本的にリストのリストでレイアウトを定める
-#  各ボタンを押したときに実行される関数
-#  引数に、各々が実装してくれた関数と、そのガチャのウィンドウのタイトルを渡す
-#  関数の返り値は、各ウィンドウのレイアウトを定めるリストのリスト
-#  背景画像についてはまだ実装していない
-#  3番目の返り値でツイートする文字列を返す
-def open_window(Func, title, tweet = 'test'):
-    _layout = Func()
+    return data.decode('utf-8')
+
+
+button_weather = image_file_to_base64('./button_image/button_weather.png')
+button_inshi = image_file_to_base64('./button_image/button_inshi.png')
+button_prime = image_file_to_base64('./button_image/button_prime.png')
+button_custom = image_file_to_base64('./button_image/button_custom.png')
+button_setting = image_file_to_base64('./button_image/setting.png')
+button_add = image_file_to_base64('./button_image/add.png')
+logo = image_file_to_base64('./img/logo.png')
+
+sg.change_look_and_feel('LightBrown3')
+
+background = sg.LOOK_AND_FEEL_TABLE['LightBrown3']['BACKGROUND']
+
+layout = [  [sg.Image(filename='./img/logo.png')],
+            [
+                sg.Button('weather', image_data=button_weather,border_width=0,use_ttk_buttons=True, button_color=('LightYellow3',background)),
+                sg.Button('inshi', image_data=button_inshi, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+            ],
+            [
+                sg.Button('prime', image_data=button_prime, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+                sg.Button('test', image_data=button_custom, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+            ],
+            [
+                sg.Button('setting', image_data=button_setting, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+                sg.Button('add', image_data=button_add, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+            ],
+            [sg.HorizontalSeparator()],
+            mamechishiki.get_mamechishiki_list()
+        ]
+
+
+window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_justification='c')
+
+
+def open_window(func, title):
+    tweet, background_theme, _layout = func()
     _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
-    url = 'https://twitter.com/intent/tweet?text='
-    url += tweet
+    _url = 'https://twitter.com/intent/tweet?text='
+    _url += tweet
     _window = sg.Window(title, _layout, modal=True)
     choice = None
     while True:
@@ -34,20 +61,10 @@ def open_window(Func, title, tweet = 'test'):
         if _event == "Exit" or _event == sg.WIN_CLOSED:
             break
         if _event == "tweet":
-            webbrowser.open(url)
+            webbrowser.open(_url)
 
     _window.close()
 
-layout = [
-    #  メニューバーの設定
-    [sg.Menu(menu_def, tearoff=False)],
-    [sg.Button("天気予報を見る", key="weather", size=(50, 5))],
-    [sg.Button("不幸ガチャ", key="fukou", size=(50, 5))],
-    mamechishiki.get_mamechishiki_list()
-]
-
-#  ウィンドウのタイトル
-window = sg.Window('Random Gacha', layout, size=(750, 500))
 
 while True:
     event, values = window.read()
@@ -58,16 +75,15 @@ while True:
     if event == sg.WINDOW_CLOSED:
         break
     #  メニューバーの「設定」が押されたら設定画面を開く
-    if event == '設定':
+    if event == 'setting':
         setting.open_setting()
-    if event == '追加':
+    if event == 'add':
         setting.open_addition()
     if event == 'weather':
-        open_window(weather_prediction.return_weather, "天気ガチャ")
-    if event == 'fukou':
-        open_window(fukou_gacha.fukou_gacha, "不幸ガチャ")
-    if event == 'tweet':
-        url = 'https://twitter.com/intent/tweet?text=Insert Text Here'
-        webbrowser.open(url)
+        open_window(weather_prediction.return_weather, "Weather Gacha")
+    if event == 'inshi':
+        open_window(insi_gacha.insi_gacha, "Inshi Gacha")
+    if event == 'prime':
+        open_window(sosuu_gacha.sosuu_gacha(), "Prime Gacha")
 
 window.close()
