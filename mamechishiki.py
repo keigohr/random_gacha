@@ -81,10 +81,10 @@ def get_mamechishiki_list():
     tweet, sentence, source, img_path = mame_set()
     tweet += "%0D%0A出典：" + source[0] + ",%20" + source[1]
     my_list = [
-            [sg.Text("今日の豆知識！", font = ('Yu Gothic', 12), text_color = "#ffff33")], 
-            [sg.Text(sentence, font = ('Yu Gothic', 11))], 
-            [sg.Text("詳しくは→ ", font = ('Yu Gothic', 11)),
-             sg.Text(source[0], tooltip = source[1], enable_events = True, font = ('Yu Gothic', 11, "underline"), text_color = "#0000ff", key = f'URL {source[1]}')]
+            [sg.Text("今日の豆知識！", font = ('游ゴシック', 12), text_color = "#ffff33")],
+            [sg.Text(sentence, font = ('游ゴシック', 11))],
+            [sg.Text("詳しくは→ ", font = ('游ゴシック', 11)),
+             sg.Text(source[0], tooltip = source[1], enable_events = True, font = ('游ゴシック', 11, "underline"), text_color = "#0000ff", key = f'URL {source[1]}')]
     ]
     # return tweet, img_path, my_list
     return my_list
