@@ -41,7 +41,7 @@ def return_weather():
   background_color=None
   weather_list=['晴れ', '曇り', '雨', '暴風雨', '雷雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png', r'img\tenki_boufuu.png', r'img\thunder_girl.png']
-  background_color_list=['#87ceeb', '#c0c0c0', '#f5f5f5', '#000000', '#fffacd'] #skyblue, silver, whitesmoke, black, lemonchiffon
+  background_color_list=['LightGreen4', 'LightBlue7', 'Reddit', 'DarkTeal5', 'DarkBrown1'] 
   index=generate_random() % 5
   weather=weather_list[index]
   weather_image=weather_image_list[index]
