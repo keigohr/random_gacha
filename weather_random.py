@@ -1,4 +1,4 @@
-#明日の予想天気、最高気温、最低気温、降水確率をリストで出力する関数
+#今日の降水確率と予想天気をリストで出力する関数
 
 #ライブラリのインポート
 import requests
@@ -27,11 +27,9 @@ def scrape_weather():
 
   return(precip_array)
 
-def generate_random():
-  x = random.random()
-  y = random.choice(scrape_weather())
-  lucky = x * y
-  return int(lucky)
+def generate_probability():
+  probability=sum(scrape_weather())/len(scrape_weather())
+  return int(probability)
   
 def return_weather():
   
@@ -42,19 +40,22 @@ def return_weather():
   weather_list=['晴れ', '曇り', '雨', '暴風雨', '雷雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png', r'img\tenki_boufuu.png', r'img\thunder_girl.png']
   background_color_list=['LightGreen4', 'LightBlue7', 'Reddit', 'DarkTeal5', 'DarkBrown1'] 
-  index=generate_random() % 5
+  
+  value = generate_probability()
+  index = int(value/20)
   weather=weather_list[index]
   weather_image=weather_image_list[index]
   background_color=background_color_list[index]
     
   #ツイートする文面を生成
-  tweet="明日の天気は{0}です。".format(weather)
+  tweet="降水確率：{0}%25 %0A 天気: {1}".format(value, weather)
+  content="降水確率：{0}% \n 天気: {1}".format(value, weather)
 
   #背景画像の指定
   #background_image=r'background_img\weather.jpg'
   
   #結果の出力
   test = [sg.Image(weather_image)]
-  test.append([sg.Text(tweet)])
+  test.append([sg.Text(content)])
   #return tweet, background_image, background_color, [test]
   return tweet, background_color, [test]
