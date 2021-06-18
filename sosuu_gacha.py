@@ -33,7 +33,8 @@ def miller_rabin_primality_test(n):
 
 def miller_rabin_output():
     n = random.randint(50, 10**30) * 2 + 1
-    tweet = res = f"{n}は"
+    tweet = f"{n}は"
+    res = f"{n}\nは"
     prime = miller_rabin_primality_test(n)
     if prime:
         probability = 1<<(judge_num * 2)
