@@ -100,7 +100,7 @@ def insi_gacha():
     else:
         rarity="あたり"
         background_color="ffd700"
-        sentence_color="#000000""""
+        sentence_color="#000000"""
     
     if rarity_index==0:
         rarity="ハズレ"
