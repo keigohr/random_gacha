@@ -42,7 +42,7 @@ def return_weather():
   background_color_list=['LightGreen4', 'LightBlue7', 'Reddit', 'DarkTeal5', 'DarkBrown1'] 
   
   value = generate_probability()
-  index = int(value/20)
+  index = int(value * random.random()/20)
   weather=weather_list[index]
   weather_image=weather_image_list[index]
   background_color=background_color_list[index]
