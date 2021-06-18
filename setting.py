@@ -215,8 +215,7 @@ def get_addition_result(num):
 
         return tweet_url,'Default1',[
         [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
-        [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))],
-        [sg.Button("Close")]
+        [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))]
         ]
 
     if type_setting == "n連ガチャ":
@@ -255,8 +254,7 @@ def get_addition_result(num):
         return tweet_url,'Default1',[
         [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
         [sg.Text("「"+event_setting[0]+"」は"+str(int(number_setting))+unit_setting+"中",font=('Noto Serif CJK JP',10)),sg.Text(int(result_num[0]),font=('Noto Serif CJK JP',30)),sg.Text(unit_setting+"でした",font=('Noto Serif CJK JP',10))],
-        [sg.Button("詳細")],
-        [sg.Button("Close")]
+        [sg.Button("詳細")]
         ]
 
     if type_setting == "コンプリート":
@@ -296,8 +294,7 @@ def get_addition_result(num):
         return tweet_url,'Default1',[
         [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
         [sg.Text("コンプリートに",font=('Noto Serif CJK JP',10)),sg.Text(str(len(result)),font=('Noto Serif CJK JP',30)),sg.Text("回かかりました",font=('Noto Serif CJK JP',10))],
-        [sg.Button("詳細")],
-        [sg.Button("Close")]
+        [sg.Button("詳細")]
         ]
 
 
