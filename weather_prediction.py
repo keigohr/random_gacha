@@ -42,16 +42,16 @@ def return_weather():
   weather_image=None
   background_color=None
   weather_image_list=[r'img\sunny_man.png', r'img\cloudy_image.png', r'img\rain_man.png']
-  background_color_list=['#87ceeb', '#c0c0c0', '#f5f5f5'] #skyblue, silver, whitesmoke
+  background_color_list=['LightGreen4', 'LightBlue7', 'Reddit'] 
   if '晴' in weather:
     weather_image=weather_image_list[0]
     background_color=background_color_list[0]
   elif '雨' in weather:
     weather_image=weather_image_list[2]
-    background_color=background_color_list[1]
+    background_color=background_color_list[2]
   elif '曇' in weather:
     weather_image=weather_image_list[1]
-    background_color=background_color_list[2]
+    background_color=background_color_list[1]
     
   #ツイートする文面を生成
   tweet="今日の天気は{0}です。%0A最高気温:{1}度%0A最低気温:{2}度%0A降水確率:0時-6時は{3}%25,6時-12時は{4}%25,12時-18時は{5}%25,18時-24時は{6}%25".format(weather, temp_max, temp_min, precip_array[0], precip_array[1], precip_array[2], precip_array[3])
