@@ -88,7 +88,7 @@ def open_addition():
     json_open = open("./addition3.json","r",encoding="utf-8")
     data3 = json.load(json_open)
     name3_setting:str = data3["name"]
-    layout = [[sg.Text("追加選択", key="new")],[sg.Button("追加ガチャ1"),sg.Text('ガチャ名: '+name1_setting)],[sg.Button("追加ガチャ2"),sg.Text('ガチャ名: '+name2_setting)],[sg.Button("追加ガチャ3"),sg.Text('ガチャ名: '+name3_setting)]]
+    layout = [[sg.Text("追加選択", key="new",font=('Noto Serif CJK JP',15))],[sg.Button("追加ガチャ1"),sg.Text('ガチャ名: '+name1_setting)],[sg.Button("追加ガチャ2"),sg.Text('ガチャ名: '+name2_setting)],[sg.Button("追加ガチャ3"),sg.Text('ガチャ名: '+name3_setting)]]
     window = sg.Window("Addition", layout, modal=True)
     choice = None
 
@@ -128,8 +128,8 @@ def open_addition1(num):
     unit_setting: str = data["unit"]
     type_value = ['ガチャ','n連ガチャ','コンプリート']
     unit_value = ['人','個','種類']
-    layout = [[sg.Text("追加設定", key="new")],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('タイプ', size=(6, 1)),sg.Combo(type_value, default_value=type_setting, size=(20,1)) ],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Text('人数(院試)', size=(10, 1)), sg.InputText(number_setting,size=(10,1)),sg.Combo(unit_value, default_value=unit_setting, size=(4,1))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
-    window = sg.Window("Addition", layout, modal=True)
+    layout = [[sg.Text("追加ガチャ"+str(num), key="new",font=('Noto Serif CJK JP',15))],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('タイプ', size=(6, 1)),sg.Combo(type_value, default_value=type_setting, size=(20,1)) ],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Text('n =', size=(2, 1)), sg.InputText(number_setting,size=(10,1)),sg.Combo(unit_value, default_value=unit_setting, size=(4,1))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
+    window = sg.Window("Addition"+str(num), layout, modal=True)
     choice = None
 
     while True:
