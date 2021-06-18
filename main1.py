@@ -67,6 +67,16 @@ def open_window(func, title, seed = -1):
             break
         if _event == "tweet":
             webbrowser.open(_url)
+        if _event == "詳細":
+            add = str(setting.get_show_list()[4])
+            name1,name2,name3 = setting.addition_name()
+            if add == name1:
+                setting.open_detail(1)
+            if add == name2:
+                setting.open_detail(2)
+            if add == name3:
+                setting.open_detail(2)
+
 
     _window.close()
 
