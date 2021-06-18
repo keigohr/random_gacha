@@ -50,8 +50,11 @@ layout = [  [sg.Image(filename='./img/logo.png')],
 window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_justification='c')
 
 
-def open_window(func, title):
-    tweet, theme, _layout = func()
+def open_window(func, title, seed = -1):
+    if seed == -1:
+        tweet, theme, _layout = func()
+    else:
+        tweet, theme, _layout = func(seed)
     _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
     sg.theme(theme)
     _url = 'https://twitter.com/intent/tweet?text='
@@ -92,11 +95,11 @@ while True:
         name1,name2,name3 = setting.addition_name()
         
         if add == name1:
-            open_window(setting.get_addition_result(1),name1)
+            open_window(setting.get_addition_result,name1, 1)
         if add == name2:
-            open_window(setting.get_addition_result(2),name2)
+            open_window(setting.get_addition_result,name2, 2)
         if add == name3:
-            open_window(setting.get_addition_result(3),name3)
+            open_window(setting.get_addition_result,name3, 3)
         
 
 window.close()
