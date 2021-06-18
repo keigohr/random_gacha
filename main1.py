@@ -88,22 +88,15 @@ while True:
     if event == 'prime':
         open_window(sosuu_gacha.sosuu_gacha, "Prime Gacha")
     if event == 'custom1':
-        add = str(setting.get_show_list()[4])
-        json_open = open("./addition1.json","r",encoding="utf-8")
-        data1 = json.load(json_open)
-        name1_setting:str = "1:"+str(data1["name"])
-        json_open = open("./addition2.json","r",encoding="utf-8")
-        data2 = json.load(json_open)
-        name2_setting:str = "2:"+str(data2["name"])
-        json_open = open("./addition3.json","r",encoding="utf-8")
-        data3 = json.load(json_open)
-        name3_setting:str = "3:"+str(data3["name"])
-        if add == name1_setting:
-            open_window(setting.get_addition_result(1))
-        if add == name2_setting:
-            open_window(setting.get_addition_result(2))
-        if add == name3_setting:
-            open_window(setting.get_addition_result(3))
+        add = str(setting.get_show_list()[5])
+        name1,name2,name3 = setting.addtion_name()
+        
+        if add == name1:
+            open_window(setting.get_addition_result(1),name1)
+        if add == name2:
+            open_window(setting.get_addition_result(2),name2)
+        if add == name3:
+            open_window(setting.get_addition_result(3),name3)
         
 
 window.close()
