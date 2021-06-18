@@ -80,7 +80,7 @@ while True:
     if event == 'add':
         setting.open_addition()
     if event == 'weather':
-        open_window(weather_prediction.return_weather, "Weather Gacha")
+        open_window(weather_random.return_weather, "Weather Gacha")
     if event == 'inshi':
         open_window(insi_gacha.insi_gacha, "Inshi Gacha")
     if event == 'prime':
