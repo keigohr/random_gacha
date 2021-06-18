@@ -107,6 +107,18 @@ def open_addition():
             break
     window.close()
 
+def addition_name():
+    json_open = open("./addition1.json","r",encoding="utf-8")
+    data1 = json.load(json_open)
+    name1_setting:str = "1:"+str(data1["name"])
+    json_open = open("./addition2.json","r",encoding="utf-8")
+    data2 = json.load(json_open)
+    name2_setting:str = "2:"+str(data2["name"])
+    json_open = open("./addition3.json","r",encoding="utf-8")
+    data3 = json.load(json_open)
+    name3_setting:str = "3:"+str(data3["name"])
+    return name1_setting,name2_setting,name3_setting
+
 def open_addition1(num):
     if num == 1:
         json_open = open("./addition1.json","r",encoding="utf-8")
