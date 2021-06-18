@@ -2,11 +2,11 @@ import PySimpleGUI as sg
 import base64
 import setting
 import weather_prediction
+import weather_random
 import mamechishiki
 import webbrowser
 import insi_gacha
 import sosuu_gacha
-import fukou_gacha
 
 
 def image_file_to_base64(file_path):
@@ -35,7 +35,7 @@ layout = [  [sg.Image(filename='./img/logo.png')],
             ],
             [
                 sg.Button('prime', image_data=button_prime, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
-                sg.Button('test', image_data=button_custom, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
+                sg.Button('custom1', image_data=button_custom, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
             ],
             [
                 sg.Button('setting', image_data=button_setting, border_width=0, use_ttk_buttons=True, button_color=('LightYellow3',background)),
@@ -50,8 +50,9 @@ window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_jus
 
 
 def open_window(func, title):
-    tweet, background_theme, _layout = func()
+    tweet, theme, _layout = func()
     _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
+    sg.theme(theme)
     _url = 'https://twitter.com/intent/tweet?text='
     _url += tweet
     _window = sg.Window(title, _layout, modal=True)
@@ -80,10 +81,10 @@ while True:
     if event == 'add':
         setting.open_addition()
     if event == 'weather':
-        open_window(weather_random.return_weather(), "Weather Gacha")
+        open_window(weather_random.return_weather, "Weather Gacha")
     if event == 'inshi':
         open_window(insi_gacha.insi_gacha, "Inshi Gacha")
     if event == 'prime':
-        open_window(sosuu_gacha.sosuu_gacha(), "Prime Gacha")
+        open_window(sosuu_gacha.sosuu_gacha, "Prime Gacha")
 
 window.close()

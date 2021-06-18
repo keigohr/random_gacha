@@ -49,10 +49,11 @@ def miller_rabin_output():
 
 def sosuu_gacha():
     tweet, prime, sentence = miller_rabin_output()
+    myfont = '游ゴシック'
     if prime:
-        return tweet, "BluePurple", [[sg.Text(sentence)]]
+        return tweet, "BluePurple", [[sg.Text(sentence, font = (myfont, 20))]]
     else:
-        return tweet, "Purple", [[sg.Text(sentence)]]
+        return tweet, "Purple", [[sg.Text(sentence, font = (myfont, 20))]]
 
 ### for _ in range(1000):
 ###    miller_rabin_output()
