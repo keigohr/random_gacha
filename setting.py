@@ -35,7 +35,7 @@ def open_setting():
     while True:
         event, values = window.read()
         if event == "Apply":
-            new_data = {"weather":str(values[0]),"region":str(values[1]),"fukou":str(values[2]),"trivia":str(values[3]),"addition1":str(values[4]),"addition2":str(values[5]),"addition3":str(values[6])}
+            new_data = {"weather":str(values[0]),"region":str(values[1]),"fukou":str(values[2]),"trivia":str(values[3]),"addition":str(values[4])}
             with open("./data.json","w",encoding = 'utf-8') as f:
                 json.dump(new_data,f,indent=4)
             break
@@ -50,10 +50,8 @@ def get_show_list():
     region_setting:str = data["region"]
     weather_setting:bool = is_true(data["weather"])
     trivia_setting:bool = is_true(data["trivia"])
-    addition1_setting:bool = is_true(data["addition1"])
-    addition2_setting:bool = is_true(data["addition2"])
-    addition3_setting:bool = is_true(data["addition3"])
-    return [fukou_setting,region_setting,weather_setting,trivia_setting,addition1_setting,addition2_setting,addition3_setting]
+    addition_setting:str = data["addition"]
+    return [fukou_setting,region_setting,weather_setting,trivia_setting,addition_setting]
 
 def get_show_list_addition(num):
     if num == 1:
