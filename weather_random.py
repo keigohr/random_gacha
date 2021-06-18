@@ -48,7 +48,7 @@ def return_weather():
   background_color=background_color_list[index]
     
   #ツイートする文面を生成
-  tweet="今日の天気は{0}です。".format(weather)
+  tweet="明日の天気は{0}です。".format(weather)
 
   #背景画像の指定
   #background_image=r'background_img\weather.jpg'
