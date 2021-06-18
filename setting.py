@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 import json
+from PySimpleGUI.PySimpleGUI import Text
 import numpy as np
 import random
 
@@ -121,7 +122,12 @@ def open_addition1(num):
     event_setting: str = data["event"]
     probability_setting: str = data["probability"]
     uniform_setting: bool = is_true(data["uniform"])
-    layout = [[sg.Text("追加設定", key="new")],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
+    type_setting: str = data["type"]
+    number_setting: int = data["number"]
+    unit_setting: str = data["unit"]
+    type_value = ['ガチャ','院試','コンプリート']
+    unit_value = ['人','個','種類']
+    layout = [[sg.Text("追加設定", key="new")],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('タイプ', size=(6, 1)),sg.Combo(type_value, default_value=type_setting, size=(20,1)) ],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Text('人数(院試)', size=(10, 1)), sg.InputText(number_setting,size=(10,1)),sg.Combo(unit_value, default_value=unit_setting, size=(4,1))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
     window = sg.Window("Addition", layout, modal=True)
     choice = None
 
@@ -129,7 +135,7 @@ def open_addition1(num):
         event, values = window.read()
 
         if event == "Apply":
-            new_data = {"name":str(values[0]),"event":str(values[1]),"probability":str(values[2]),"uniform":str(values[3])}
+            new_data = {"name":str(values[0]),"type":str(values[1]),"event":str(values[2]),"probability":str(values[3]),"number":int(values[4]),"unit":str(values[5]),"uniform":str(values[6])}
             if (len(new_data["event"].split()) != len(new_data["probability"].split())) and new_data["uniform"] != "True":
                 open_warning()
             elif num == 1:
@@ -149,6 +155,8 @@ def open_addition1(num):
 
     window.close()
 
+
+
 def get_addition_result(num):
     if num == 1:
         json_open = open("./addition1.json","r",encoding="utf-8")
@@ -164,52 +172,149 @@ def get_addition_result(num):
     event_setting: str = data["event"].split()
     probability_setting: float = data["probability"].split()
     uniform_setting: bool = is_true(data["uniform"])
+    type_setting: str = data["type"]
+    number_setting: int = data["number"]
+    unit_setting: str = data["unit"]
 
     len_event = len(event_setting)
     sum = 0.0
-    
-    if uniform_setting == 1:
-        probability_setting = [p/float(len_event) for p in np.ones(len_event)]
-    else:
-        for i in range(len_event):
+    for i in range(len_event):
             probability_setting[i] = float(probability_setting[i])
             sum = sum + probability_setting[i]
+    if uniform_setting == 1:
+        probability_setting = [p/float(len_event) for p in np.ones(len_event)]
+    elif type_setting == "ガチャ":        
         probability_setting = [p/sum for p in probability_setting]
     #print(probability_setting)
-    p = 0.0
-    i = -1
-    ran = random.random()
-    #print(ran)
-    while p < ran:
-        i = i + 1
-        p = p + probability_setting[i]
-        #print(p)
-        if i == len_event - 1:
+    if type_setting == "ガチャ":
+        p = 0.0
+        i = -1
+        ran = random.random()
+        #print(ran)
+        while p < ran:
+            i = i + 1
+            p = p + probability_setting[i]
+            #print(p)
+            if i == len_event - 1:
+                break
+        return name_setting+"の結果は"+event_setting[i]+"でした","path",[
+        [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
+        [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))],
+        [sg.Button("Close")]
+        ]
+
+    if type_setting == "院試":
+        result = []
+        result_num = np.zeros(number_setting)
+        for j in range(number_setting):
+            p = 0.0
+            i = -1
+            ran = random.random()
+            while p < ran:
+                i = i + 1
+                if i == len_event:
+                    break
+                p = p + probability_setting[i]
+            if i == len_event:
+                result.append("その他")
+            else:
+                result.append(event_setting[i])
+                result_num[i] = result_num[i] + 1
+        new_data = {"result":result}
+        if num == 1:
+            with open("./result1.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+        elif num == 2:
+            with open("./result2.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+        elif num == 3:
+            with open("./result3.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+            
+        return name_setting+"の結果、"+event_setting[0]+"なのは"+str(number_setting)+unit_setting+"中"+str(result_num[0])+unit_setting+"でした","path",[
+        [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
+        [sg.Text("「"+event_setting[0]+"」は"+str(number_setting)+unit_setting+"中",font=('Noto Serif CJK JP',10)),sg.Text(int(result_num[0]),font=('Noto Serif CJK JP',30)),sg.Text(unit_setting+"でした",font=('Noto Serif CJK JP',10))],
+        [sg.Button("詳細")],
+        [sg.Button("Close")]
+        ]
+
+    if type_setting == "コンプリート":
+        result = []
+        result_num = np.zeros(len(event_setting))
+        while True:
+            p = 0.0
+            i = -1
+            ran = random.random()
+            while p < ran:
+                i = i + 1
+                if i == len_event:
+                    break
+                p = p + probability_setting[i]
+            if i == len_event:
+                result.append("その他")
+            else:
+                result.append(event_setting[i])
+                result_num[i] = result_num[i] + 1
+            #print(i)
+            if np.count_nonzero(result_num) == len(event_setting):
+                break
+        new_data = {"result":result}
+        if num == 1:
+            with open("./result1.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+        elif num == 2:
+            with open("./result2.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+        elif num == 3:
+            with open("./result3.json","w",encoding = 'utf-8') as f:
+                json.dump(new_data,f,indent=4)
+
+        return name_setting+"のコンプリートに"+str(len(result))+"回かかりました","path",[
+        [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
+        [sg.Text("コンプリートに",font=('Noto Serif CJK JP',10)),sg.Text(str(len(result)),font=('Noto Serif CJK JP',30)),sg.Text("回かかりました",font=('Noto Serif CJK JP',10))],
+        [sg.Button("詳細")],
+        [sg.Button("Close")]
+        ]
+
+
+def open_detail(num):
+    if num == 1:
+        json_open = open("./result1.json","r",encoding="utf-8")
+        data = json.load(json_open)
+    elif num == 2:
+        json_open = open("./result2.json","r",encoding="utf-8")
+        data = json.load(json_open)
+    elif num == 3:
+        json_open = open("./result3.json","r",encoding="utf-8")
+        data = json.load(json_open)
+    result = data["result"]
+    layout = [[sg.Text(result,font=('Noto Serif CJK JP',10))]]
+    window = sg.Window("detail", layout, modal=True)
+    choice = None
+    while True:
+        event, values = window.read()
+        if event == sg.WINDOW_CLOSED:
             break
+    window.close()
 
-    #print(event_setting[i])
     
-    
 
-    return name_setting+"の結果は"+event_setting[i]+"でした","path",[
-    [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
-    [sg.Text("「"+event_setting[i]+"」",font=('Noto Serif CJK JP',30))],
-    [sg.Button("Close")]
-    ]
-
-
-def show_test():
-    tweet,path,layout = get_addition_result(2)
+def show_test(i):
+    tweet,path,layout = get_addition_result(i)
     window = sg.Window("Addition", layout, modal=True)
     choice = None
     while True:
         event, values = window.read()
         if event == sg.WINDOW_CLOSED:
             break
+        if event == "詳細":
+            open_detail(i)
         if event == "Close":
             break
     window.close()
 
 
 #get_addition_result(1)
-#show_test()
+#show_test(2)
+#open_setting()
+#open_addition()
