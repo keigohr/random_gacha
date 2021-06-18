@@ -1,4 +1,4 @@
-#今日の降水確率と予想天気をリストで出力する関数
+﻿#今日の降水確率と予想天気をリストで出力する関数
 
 #ライブラリのインポート
 import requests
@@ -47,31 +47,46 @@ def generate_probability():
 def return_weather():
   
   #天気予報をランダムに生成する、天気予報に画像を対応させる
-  weather=None
   weather_image=None
+  weather_list=[]
+  test1=[]
+  test2=[]
   background_color=None
   weather_list=['晴れ', '雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\rain_man.png']
   background_color_list=['LightGreen4', 'Reddit'] 
+
+  rain_number=0
   
   value = generate_probability()
-  index_list=[0, 1]
-  index = random.choices(index_list, weights=(100-value, value), k=1)[0]
-  weather=weather_list[index]
-  weather_image=weather_image_list[index]
+  index_choice=[0, 1]
+  index_list = random.choices(index_choice, weights=(100-value, value), k=5)
+  for index in index_list:
+    weather_image=weather_image_list[index]
+    test1.append(sg.Image(weather_image))
+    rain_number+=index
+
+  index_list = random.choices(index_choice, weights=(100-value, value), k=5)
+  for index in index_list:
+    weather_image=weather_image_list[index]
+    test2.append(sg.Image(weather_image))
+    rain_number+=index
+
   background_color=background_color_list[index]
     
   #ツイートする文面を生成
-  tweet="降水確率:{0}%25%0A天気:{1}".format(value, weather)
-  content="降水確率:{0}%\n天気:{1}".format(value, weather)
-
-  #背景画像の指定
-  #background_image=r'background_img\weather.jpg'
+  #tweet="降水確率:{0}%25%0A天気:{1}".format(value, weather)
+  tweet="降水確率:{0}%25".format(value)
+  #content="降水確率:{0}%\n天気:{1}".format(value, weather)
+  
+  content0="今日の天気"
+  content1="降水確率は{0}%です。".format(value)
+  content2="あなたは10回中{0}回雨にぬれました。".format(rain_number)
   
   #結果の出力
-  test = [sg.Image(weather_image)]
+  #for weather in weather_list
+  #test = [sg.Image(weather_list)]
   
-  myfont = '游ゴシック'
-  test.append([sg.Text(content, font = (myfont, 20))])
-  #return tweet, background_image, background_color, [test]
+  myfont = 'UD デジタル 教科書体 NP-B'
+  test=[[sg.Text(content0, font = (myfont, 20))], [sg.Text(content1, font = (myfont, 20))], test1, test2, [sg.Text(content2, font = (myfont, 20))]]
   return tweet, background_color, [test]
