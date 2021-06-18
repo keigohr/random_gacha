@@ -5,6 +5,8 @@ import numpy as np
 import random
 import urllib.parse
 
+
+
 def is_true(value):
     return False if value == 'False' else bool(value)
 
@@ -15,9 +17,7 @@ def open_setting():
     region_setting:str = data["region"]
     weather_setting:bool = is_true(data["weather"])
     trivia_setting:bool = is_true(data["trivia"])
-    addition1_setting:bool = is_true(data["addition1"])
-    addition2_setting:bool = is_true(data["addition2"])
-    addition3_setting:bool = is_true(data["addition3"])
+    addition_setting:str = str(data["addition"])
     json_open = open("./addition1.json","r",encoding="utf-8")
     data1 = json.load(json_open)
     name1_setting:str = data1["name"]
@@ -28,7 +28,8 @@ def open_setting():
     data3 = json.load(json_open)
     name3_setting:str = data3["name"]
     values_region = ['北海道','東北','関東','中部','近畿','中国','四国','九州']
-    layout = [[sg.Text("表示設定", key="new")],[sg.Checkbox('天気予報', default=weather_setting)],[sg.Text('地域', size=(4, 1)),sg.Combo(values_region, default_value=region_setting, size=(20,1)) ],[sg.Checkbox('不幸ガチャ', default=fukou_setting)],[sg.Checkbox('豆知識', default=trivia_setting)],[sg.Checkbox('追加ガチャ1: '+name1_setting, default=addition1_setting)],[sg.Checkbox('追加ガチャ2: '+name2_setting, default=addition2_setting)],[sg.Checkbox('追加ガチャ3: '+name3_setting, default=addition3_setting)],[sg.Button("Apply")]]
+    values_addition = ["1:"+str(name1_setting),"2:"+str(name2_setting),"3:"+str(name3_setting)]
+    layout = [[sg.Text("表示設定", key="new",font=('Noto Serif CJK JP',15))],[sg.Checkbox('天気予報', default=weather_setting)],[sg.Text('地域', size=(4, 1)),sg.Combo(values_region, default_value=region_setting, size=(20,1)) ],[sg.Checkbox('不幸ガチャ', default=fukou_setting)],[sg.Checkbox('豆知識', default=trivia_setting)],[sg.Text('追加ガチャ', size=(10, 1)),sg.Combo(values_addition, default_value=addition_setting, size=(20,1))],[sg.Button("Apply")]]
     window = sg.Window("Settings", layout, modal=True)
     choice = None
     while True:
@@ -328,6 +329,6 @@ def show_test(i):
 
 
 #get_addition_result(1)
-#show_test(2)
+#show_test(1)
 #open_setting()
 #open_addition()
