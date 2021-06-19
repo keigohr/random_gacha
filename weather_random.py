@@ -41,7 +41,8 @@ def scrape_weather():
   return(precip_array)
 
 def generate_probability():
-  probability=sum(scrape_weather())/len(scrape_weather())
+  #probability=sum(scrape_weather())/len(scrape_weather())
+  probability=scrape_weather()[2]
   return int(probability)
   
 def return_weather():
@@ -49,8 +50,8 @@ def return_weather():
   #天気予報をランダムに生成する、天気予報に画像を対応させる
   weather_image=None
   weather_list=[]
-  test1=[]
-  test2=[]
+  weathers1=[]
+  weathers2=[]
   background_color=None
   weather_list=['晴れ', '雨' ]
   weather_image_list=[r'img\sunny_man.png', r'img\rain_man.png']
@@ -63,13 +64,13 @@ def return_weather():
   index_list = random.choices(index_choice, weights=(100-value, value), k=5)
   for index in index_list:
     weather_image=weather_image_list[index]
-    test1.append(sg.Image(weather_image))
+    weathers1.append(sg.Image(weather_image))
     rain_number+=index
 
   index_list = random.choices(index_choice, weights=(100-value, value), k=5)
   for index in index_list:
     weather_image=weather_image_list[index]
-    test2.append(sg.Image(weather_image))
+    weathers2.append(sg.Image(weather_image))
     rain_number+=index
 
   background_color='LightGreen4'
@@ -87,6 +88,7 @@ def return_weather():
   #for weather in weather_list
   #test = [sg.Image(weather_list)]
   
-  myfont = 'UD デジタル 教科書体 NP-B'
-  test=[[sg.Text(content0, font = (myfont, 20))], [sg.Text(content1, font = (myfont, 20))], test1, test2, [sg.Text(content2, font = (myfont, 20))]]
-  return content2, background_color, [test]
+  myfont = 'UD デジタル 教科書体 NP-R'
+  layout_column=[[sg.Text(content0, font = (myfont, 20))], [sg.Text(content1,font = (myfont, 20))], weathers1, weathers2, [sg.Text(content2,font = (myfont, 20))]]
+  layout = [[sg.Column(layout_column, element_justification='center')]]
+  return content2, background_color, layout

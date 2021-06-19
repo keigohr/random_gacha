@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+﻿import PySimpleGUI as sg
 import base64
 import setting
 import weather_prediction
