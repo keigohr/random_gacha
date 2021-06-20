@@ -76,7 +76,7 @@ def open_window(func, title, seed = -1):
             if add == name2:
                 setting.open_detail(2)
             if add == name3:
-                setting.open_detail(2)
+                setting.open_detail(3)
 
     sg.theme('LightBrown3')
     _window.close()
