@@ -22,6 +22,7 @@ button_inshi = image_file_to_base64('./button_image/button_inshi.png')
 button_prime = image_file_to_base64('./button_image/button_prime.png')
 button_custom = image_file_to_base64('./button_image/button_custom.png')
 button_setting = image_file_to_base64('./button_image/setting.png')
+button_tweet = image_file_to_base64('./button_image/button_tweet.png')
 button_add = image_file_to_base64('./button_image/add.png')
 logo = image_file_to_base64('./img/logo.png')
 
@@ -55,11 +56,11 @@ def open_window(func, title, seed = -1):
         tweet, theme, _layout = func()
     else:
         tweet, theme, _layout = func(seed)
-    _layout.append([sg.Button("ツイート", key="tweet", size=(50, 5))])
+    _layout.append([sg.Button(key="tweet", border_width=0, image_data=button_tweet, button_color=('SkyBlue3','#1DA0F1'))])
     sg.theme(theme)
     _url = 'https://twitter.com/intent/tweet?text='
     _url += tweet
-    _window = sg.Window(title, _layout, modal=True)
+    _window = sg.Window(title, _layout, modal=True, use_default_focus=False, element_justification='c')
     choice = None
     while True:
         _event, _values = _window.read()
@@ -77,7 +78,7 @@ def open_window(func, title, seed = -1):
             if add == name3:
                 setting.open_detail(2)
 
-
+    sg.theme('LightBrown3')
     _window.close()
 
 
