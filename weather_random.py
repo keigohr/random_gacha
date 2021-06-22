@@ -64,13 +64,13 @@ def return_weather():
   index_list = random.choices(index_choice, weights=(100-value, value), k=5)
   for index in index_list:
     weather_image=weather_image_list[index]
-    weathers1.append(sg.Image(weather_image, background_color='green'))
+    weathers1.append(sg.Image(weather_image, background_color='yellow'))
     rain_number+=index
 
   index_list = random.choices(index_choice, weights=(100-value, value), k=5)
   for index in index_list:
     weather_image=weather_image_list[index]
-    weathers2.append(sg.Image(weather_image, background_color='green'))
+    weathers2.append(sg.Image(weather_image, background_color='yellow'))
     rain_number+=index
 
   background_color='LightGreen4'
@@ -89,6 +89,6 @@ def return_weather():
   #test = [sg.Image(weather_list)]
   
   myfont = 'UD デジタル 教科書体 NP-R'
-  layout_column=[[sg.Text(content0, font = (myfont, 20), background_color='green')], [sg.Text(content1,font = (myfont, 20), background_color='green')], weathers1, weathers2, [sg.Text(content2,font = (myfont, 20), background_color='green')]]
-  layout = [[sg.Column(layout_column, element_justification='center', background_color='green')]]
+  layout_column=[[sg.Text(content0, font = (myfont, 20), background_color='yellow')], [sg.Text(content1,font = (myfont, 20), background_color='yellow')], weathers1, weathers2, [sg.Text(content2,font = (myfont, 20), background_color='yellow')]]
+  layout = [[sg.Column(layout_column, element_justification='center', background_color='yellow')]]
   return content2, background_color, layout
