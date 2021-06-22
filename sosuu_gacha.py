@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 import random
 
 judge_num = 10
-gacha_num = 10
+gacha_num = 15 ###gacha_num = 0 mod 5
 
 def fast_pow(_n, pw, mod):
     res = 1
@@ -16,7 +16,7 @@ def fast_pow(_n, pw, mod):
         pw >>= 1
     return res
 
-# input n : odd, > 100
+### input n : odd, > 100
 def miller_rabin_primality_test(n):
     s = 0
     d = n - 1
@@ -33,7 +33,7 @@ def miller_rabin_primality_test(n):
     return True
 
 def miller_rabin_output():
-    n = random.randint(50, 5 * (10**29)) * 2 + 1
+    n = random.randint(51, 5 * (10**29)) * 2 - 1
     prime = miller_rabin_primality_test(n)
     return prime, n
 
@@ -45,6 +45,14 @@ def n_to_image(n, texttheme):
         n_copy //= 10
     res.reverse()
     return res
+
+def n_to_str30(n):
+    temp_n = str(n)
+    s = ""
+    for _ in range(30 - len(temp_n)):
+        s += "  "
+    s += temp_n
+    return s
 
 def sosuu_gacha():
     res_of_composite = []
@@ -84,21 +92,24 @@ def sosuu_gacha():
 
     layout.append([sg.Text("引いた数", font = (myfont, 20), text_color = mytextcolor, background_color = texttheme)])
     temp_Text = []
+    myfontsize = 75 // max(5, gacha_num // 2)
     for n in res_of_prime:
-        temp_Text.append(sg.Text(str(n), font = (myfont, 15), text_color = mytextcolor, background_color = texttheme))
+        temp_Text.append(sg.Text(n_to_str30(n), font = (myfont, myfontsize), text_color = mytextcolor, background_color = texttheme))
     if len(res_of_prime) > 0:
         mytextcolor = "white"
     for n in res_of_composite:
-        temp_Text.append(sg.Text(str(n), font = (myfont, 15), text_color = mytextcolor, background_color = texttheme))
+        temp_Text.append(sg.Text(n_to_str30(n), font = (myfont, myfontsize), text_color = mytextcolor, background_color = texttheme))
     
-    for i in range(5):
-        layout.append([temp_Text[i * 2], sg.Text("     ", text_color = mytextcolor, background_color = texttheme), temp_Text[i * 2 + 1]])
+    yokohaba = max(1, gacha_num // 5)
+    for i in range(gacha_num // yokohaba):
+        one_line = [temp_Text[i * yokohaba]]
+        for j in range(yokohaba - 1):
+            one_line.append(sg.Text("     ", font = (myfont, myfontsize), text_color = mytextcolor, background_color = texttheme))
+            one_line.append(temp_Text[i * yokohaba + 1 + j])
+        layout.append(one_line)
 
     layout_with_column = [[sg.Column(layout, element_justification = 'center', background_color = texttheme)]]
     if prime:
         return tweet, mytheme, layout_with_column
     else:
         return tweet, mytheme, layout_with_column
-
-### for _ in range(1000):
-###    miller_rabin_output()
