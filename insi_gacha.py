@@ -81,16 +81,20 @@ def insi_gacha():
     background_color=""
     sentence_color=""
     result_font=""
+    background_color_image=""
     if rarity_index==0:
         rarity="ハズレ"
         background_color="DarkGrey"
+        background_color_image="#a9a9a9"
         sentence_color="#000000"
     elif rarity_index==1:
         rarity="大ハズレ"
         background_color="Black"
+        background_color_image="#000000"
         sentence_color="#ff0000"
     else:
         rarity="あたり"
         background_color="LightYellow"
+        background_color_image="#ffffe0"
         sentence_color="#000000"
-    return result_tweet,background_color,[[sg.Image(result_image)]]
+    return result_tweet,background_color,[[sg.Image(result_image,background_color=background_color_image)]]
