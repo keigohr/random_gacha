@@ -50,9 +50,13 @@ layout = [  [sg.Image(filename='./img/logo.png')],
 window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_justification='c')
 
 
-def open_window(func, title):
-    tweet, theme, _layout = func()
-    _layout.append([sg.Button(key="tweet", border_width=0, image_data=button_tweet, button_color=('SkyBlue3', '#1DA0F1'))])
+def open_window(func, title, seed = -1):
+    if seed == -1:
+        tweet, theme, _layout = func()
+    else:
+        tweet, theme, _layout = func(seed)
+    _layout.append([sg.Button(key="tweet", border_width=0, image_data=button_tweet, button_color=('SkyBlue3','#1DA0F1'))])
+    sg.theme(theme)
     _url = 'https://twitter.com/intent/tweet?text='
     _url += tweet
     _window = sg.Window(title, _layout, modal=True, use_default_focus=False, element_justification='c')
@@ -63,8 +67,19 @@ def open_window(func, title):
             break
         if _event == "tweet":
             webbrowser.open(_url)
-    _window.close()
+        if _event == "詳細":
+            add = str(setting.get_show_list()[4])
+            name1,name2,name3 = setting.addition_name()
+            if add == name1:
+                setting.open_detail(1)
+            if add == name2:
+                setting.open_detail(2)
+            if add == name3:
+                setting.open_detail(3)
+
     sg.theme('LightBrown3')
+    _window.close()
+
 
 
 while True:
