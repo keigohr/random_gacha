@@ -1,9 +1,11 @@
 {
     "name": "\u9662\u8a66",
     "type": "n\u9023\u30ac\u30c1\u30e3",
-    "event": "\u5408\u683c\n\u4e0d\u5408\u683c\n\n\n\n\n",
-    "probability": "0.99\n0.01\n\n\n\n\n\n\n\n\n",
+    "event": "\u5408\u683c\n\u4e0d\u5408\u683c\n\n\n\n\n\n\n",
+    "probability": "0.99\n0.01\n\n\n\n\n\n\n\n\n\n\n",
     "number": 30,
     "unit": "\u4eba",
+    "fee_on": "True",
+    "fee": 100,
     "uniform": "False"
 }
