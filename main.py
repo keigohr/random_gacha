@@ -52,8 +52,7 @@ window = sg.Window('Nandemo Gacha', layout, use_default_focus=False, element_jus
 
 def open_window(func, title):
     tweet, theme, _layout = func()
-    _layout.append([sg.Button(key="tweet", border_width=0, image_data=button_tweet, button_color=('SkyBlue3','#1DA0F1'))])
-    sg.theme(theme)
+    _layout.append([sg.Button(key="tweet", border_width=0, image_data=button_tweet, button_color=('SkyBlue3', '#1DA0F1'))])
     _url = 'https://twitter.com/intent/tweet?text='
     _url += tweet
     _window = sg.Window(title, _layout, modal=True, use_default_focus=False, element_justification='c')
@@ -64,8 +63,8 @@ def open_window(func, title):
             break
         if _event == "tweet":
             webbrowser.open(_url)
-    sg.theme('LightBrown3')
     _window.close()
+    sg.theme('LightBrown3')
 
 
 while True:
