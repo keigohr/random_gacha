@@ -137,9 +137,11 @@ def open_addition1(num):
     type_setting: str = data["type"]
     number_setting: int = data["number"]
     unit_setting: str = data["unit"]
+    fee_setting: int = data["fee"]
+    fee_on_setting: bool = is_true(data["fee_on"])
     type_value = ['ガチャ','n連ガチャ','コンプリート']
     unit_value = ['人','個','種類']
-    layout = [[sg.Text("追加ガチャ"+str(num), key="new",font=('Noto Serif CJK JP',15))],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('タイプ', size=(6, 1)),sg.Combo(type_value, default_value=type_setting, size=(20,1)) ],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Text('n =', size=(2, 1)), sg.InputText(number_setting,size=(10,1)),sg.Combo(unit_value, default_value=unit_setting, size=(4,1))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
+    layout = [[sg.Text("追加ガチャ"+str(num), key="new",font=('Noto Serif CJK JP',15))],[sg.Text('ガチャ名称', size=(9, 1)), sg.InputText(name_setting)],[sg.Text('タイプ', size=(6, 1)),sg.Combo(type_value, default_value=type_setting, size=(20,1)) ],[sg.Text('事象',size=(32,1)),sg.Text('確率',size=(32,1))],[sg.Multiline(default_text=event_setting,size=(35,5)),sg.Multiline(default_text=probability_setting,size=(35,5))],[sg.Text('n =', size=(2, 1)), sg.InputText(number_setting,size=(10,1)),sg.Combo(unit_value, default_value=unit_setting, size=(4,1))],[sg.Checkbox('ガチャ1回',default=fee_on_setting, size=(9, 1)), sg.InputText(fee_setting,size=(10,1)),sg.Text('円',size=(2,1))],[sg.Checkbox('一様分布', default=uniform_setting)],[sg.Button("Apply")]]
     window = sg.Window("Addition"+str(num), layout, modal=True)
     choice = None
 
@@ -147,7 +149,7 @@ def open_addition1(num):
         event, values = window.read()
 
         if event == "Apply":
-            new_data = {"name":str(values[0]),"type":str(values[1]),"event":str(values[2]),"probability":str(values[3]),"number":int(values[4]),"unit":str(values[5]),"uniform":str(values[6])}
+            new_data = {"name":str(values[0]),"type":str(values[1]),"event":str(values[2]),"probability":str(values[3]),"number":int(values[4]),"unit":str(values[5]),"fee_on":str(values[6]),"fee":int(values[7]),"uniform":str(values[8])}
             if (len(new_data["event"].split()) != len(new_data["probability"].split())) and new_data["uniform"] != "True":
                 open_warning()
             elif num == 1:
@@ -187,15 +189,18 @@ def get_addition_result(num):
     type_setting: str = data["type"]
     number_setting: int = data["number"]
     unit_setting: str = data["unit"]
+    fee_setting: int = data["fee"]
+    fee_on_setting: bool = is_true(data["fee_on"])
 
     len_event = len(event_setting)
     sum = 0.0
+    if uniform_setting == 1:
+        probability_setting = [p/float(len_event) for p in np.ones(len_event)]
     for i in range(len_event):
             probability_setting[i] = float(probability_setting[i])
             sum = sum + probability_setting[i]
-    if uniform_setting == 1:
-        probability_setting = [p/float(len_event) for p in np.ones(len_event)]
-    elif type_setting == "ガチャ":        
+    
+    if type_setting == "ガチャ" and uniform_setting != 1:        
         probability_setting = [p/sum for p in probability_setting]
     #print(probability_setting)
     if type_setting == "ガチャ":
@@ -220,7 +225,7 @@ def get_addition_result(num):
 
     if type_setting == "n連ガチャ":
         result = []
-        result_num = np.zeros(number_setting)
+        result_num = np.zeros(number_setting,dtype=int)
         for j in range(number_setting):
             p = 0.0
             i = -1
@@ -234,8 +239,9 @@ def get_addition_result(num):
                 result.append("その他")
             else:
                 result.append(event_setting[i])
-                result_num[i] = result_num[i] + 1
-        new_data = {"result":result}
+                result_num[i] = int(result_num[i] + 1)
+        result_num = result_num.tolist()
+        new_data = {"result":result_num}
         if num == 1:
             with open("./result1.json","w",encoding = 'utf-8') as f:
                 json.dump(new_data,f,indent=4)
@@ -259,7 +265,7 @@ def get_addition_result(num):
 
     if type_setting == "コンプリート":
         result = []
-        result_num = np.zeros(len(event_setting))
+        result_num = np.zeros(len(event_setting),dtype=int)
         while True:
             p = 0.0
             i = -1
@@ -273,11 +279,12 @@ def get_addition_result(num):
                 result.append("その他")
             else:
                 result.append(event_setting[i])
-                result_num[i] = result_num[i] + 1
+                result_num[i] = int(result_num[i] + 1)
             #print(i)
             if np.count_nonzero(result_num) == len(event_setting):
                 break
-        new_data = {"result":result}
+        result_num = result_num.tolist()
+        new_data = {"result":result_num}
         if num == 1:
             with open("./result1.json","w",encoding = 'utf-8') as f:
                 json.dump(new_data,f,indent=4)
@@ -287,29 +294,39 @@ def get_addition_result(num):
         elif num == 3:
             with open("./result3.json","w",encoding = 'utf-8') as f:
                 json.dump(new_data,f,indent=4)
+        if fee_on_setting:
+            tweet = name_setting+"のコンプリートに"+str(len(result)*fee_setting)+"円かかりました"
+            tweet_url = urllib.parse.quote(tweet)
+            return tweet_url,'Default1',[[sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],[sg.Text("コンプリートに",font=('Noto Serif CJK JP',10)),sg.Text(str(len(result)*fee_setting),font=('Noto Serif CJK JP',30)),sg.Text("円かかりました",font=('Noto Serif CJK JP',10))],[sg.Button("詳細")]]
+        else:
+            tweet = name_setting+"のコンプリートに"+str(len(result))+"回かかりました"
+            tweet_url = urllib.parse.quote(tweet)
+            return tweet_url,'Default1',[[sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],[sg.Text("コンプリートに",font=('Noto Serif CJK JP',10)),sg.Text(str(len(result)),font=('Noto Serif CJK JP',30)),sg.Text("回かかりました",font=('Noto Serif CJK JP',10))],[sg.Button("詳細")]]
 
-        tweet = name_setting+"のコンプリートに"+str(len(result))+"回かかりました"
-        tweet_url = urllib.parse.quote(tweet)
-
-        return tweet_url,'Default1',[
-        [sg.Text(name_setting,font=('Noto Serif CJK JP',20)),sg.Text("の結果",font=('Noto Serif CJK JP',10))],
-        [sg.Text("コンプリートに",font=('Noto Serif CJK JP',10)),sg.Text(str(len(result)),font=('Noto Serif CJK JP',30)),sg.Text("回かかりました",font=('Noto Serif CJK JP',10))],
-        [sg.Button("詳細")]
-        ]
 
 
 def open_detail(num):
     if num == 1:
         json_open = open("./result1.json","r",encoding="utf-8")
         data = json.load(json_open)
+        json_open = open("./addition1.json","r",encoding="utf-8")
+        data1 = json.load(json_open)
     elif num == 2:
         json_open = open("./result2.json","r",encoding="utf-8")
         data = json.load(json_open)
+        json_open = open("./addition2.json","r",encoding="utf-8")
+        data1 = json.load(json_open)
     elif num == 3:
         json_open = open("./result3.json","r",encoding="utf-8")
         data = json.load(json_open)
-    result = data["result"]
-    layout = [[sg.Text(result,font=('Noto Serif CJK JP',10))]]
+        json_open = open("./addition3.json","r",encoding="utf-8")
+        data1 = json.load(json_open)
+    result: str = data["result"]
+    event_setting: int = data1["event"].split()
+    layout = []
+    for i in range (len(event_setting)):
+        layout.append([sg.Text(event_setting[i]+":"+str(result[i]),font=('Noto Serif CJK JP',10))])
+    #layout = [[sg.Text(result[0],font=('Noto Serif CJK JP',10))]]
     window = sg.Window("detail", layout, modal=True)
     choice = None
     while True:
@@ -336,6 +353,6 @@ def show_test(i):
 
 
 #get_addition_result(1)
-#show_test(1)
+#show_test(3)
 #open_setting()
 #open_addition()
